@@ -1,6 +1,6 @@
 *.sqlite3
 DataStruktur.md
-polls/
+pollsTest/
 *.log
 *.pot
 *.pyc
