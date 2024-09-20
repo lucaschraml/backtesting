@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'tailwind',
-    'trader',
+    'tailwindApp',
     'django_browser_reload',
 ]
 
@@ -132,6 +132,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TAILWIND_APP_NAME = 'trader'
+TAILWIND_APP_NAME = 'tailwindApp'
 
 NPM_BIN_PATH="C:/Users/lucas/AppData/Roaming/npm/npm.cmd"
