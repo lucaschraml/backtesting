@@ -1,0 +1,7 @@
+*.sqlite3
+DataStruktur.md
+polls/
+*.log
+*.pot
+*.pyc
+__pycache__
