@@ -1,0 +1,40 @@
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_margin">Margin</label>
+        {{ form.margin }}
+    </div>
+    
+    <div class="form-group">
+        <label>Leverage</label>
+        <div class="leverage-container">
+            {% for choice in form.leverage %}
+                <label class="leverage-option">
+                    {{ choice.tag }} {{ choice.choice_label }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="form-group take-profit-section">
+        <label for="id_take_profit_percentage">Take Profit</label>
+        <div class="input-group">
+            {{ form.take_profit_percentage }}
+            <div class="input-group-append">
+                <span class="input-group-text">%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group stop-loss-section">
+        <label for="id_stop_loss_percentage">Stop Loss</label>
+        <div class="input-group">
+            {{ form.stop_loss_percentage }}
+            <div class="input-group-append">
+                <span class="input-group-text">%</span>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
