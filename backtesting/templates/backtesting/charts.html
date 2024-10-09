@@ -9,8 +9,158 @@
         <h1>{{ tradable.name }}</h1>
         <h1>{{ tradable.type }}</h1>
 
+        <canvas id="chart" width="800px" height="200px" style="border: 1px solid black"></canvas>
 
+        <br/>
     </div>
+        <button onclick="render(1, 30)">1 zoom</button>
+        <button onclick="render(2, 30)">2 zoom</button>
+        <button onclick="render(3, 30)">3 zoom</button>
+
+        <script type="text/javascript">
+            // wallah das wird ein candle chart diagram
+            const COLORS = {
+                positive: 'green',
+                negative: 'red',
+            };
+            const CANDLE_PADDING = 16;
+            const CANDLE_WIDTH = 16;
+
+            const canvas = document.getElementById("chart");
+            const canvasCtx = canvas.getContext("2d");
+
+            // open, close, high, low
+
+            /**
+             * @typedef {Object} Pane
+             * @property {number} yScale is the number
+             */
+
+            /**
+             * @param {[number, number, number, number]} candles
+             * @returns {Pane}
+             */
+            function createPane(candles, zoom, offset) {
+                const maxValue = Math.max(...candles.map(c => c[2]));
+                const minValue = Math.min(...candles.map(c => c[3]));
+
+                const canvasHeight = canvas.clientHeight;
+
+                const yScale = ((Math.abs(maxValue - minValue) / canvasHeight) * 10) * zoom;
+
+                return {
+                    yScale,
+                    offset: (minValue * yScale) + offset,
+                };
+            }
+
+            function drawCandle(index, pane, candle) {
+                const [open, close, high, low] = candle;
+
+                const isNegative = open > close;
+
+                // map candle to pane
+                const w = CANDLE_WIDTH;
+                const y = (isNegative ? open : close) + 8;
+                const paneY = canvas.clientHeight - (y * pane.yScale) + pane.offset;
+
+                const height = Math.abs(open - close);
+
+                const paneHeight = height * pane.yScale;
+
+                const stickYStart = canvas.clientHeight - (((low) * pane.yScale) + (8 * pane.yScale) - pane.offset);
+                const stickYEnd = canvas.clientHeight - (((high) * pane.yScale) + (16 * pane.yScale) - pane.offset);
+                console.log(stickYEnd, stickYStart)
+
+                canvasCtx.strokeStyle = 'black';
+                canvasCtx.beginPath();
+                canvasCtx.moveTo((index * (CANDLE_WIDTH + CANDLE_PADDING)+ (CANDLE_WIDTH / 2)), stickYStart);
+                canvasCtx.lineTo((index * (CANDLE_WIDTH +  + CANDLE_PADDING) + (CANDLE_WIDTH / 2)), stickYEnd);
+                canvasCtx.stroke();
+
+                canvasCtx.fillStyle = isNegative ? COLORS.negative : COLORS.positive;
+
+                canvasCtx.fillRect(index * (CANDLE_WIDTH + CANDLE_PADDING), paneY, CANDLE_WIDTH, paneHeight);
+            }
+
+            const candles = [
+                [205.30, 207.23, 209.99, 201.07],
+                [199.09, 209.27, 213.50, 196.00],
+                [219.15, 219.86, 225.60, 217.71],
+                [224.37, 218.36, 224.48, 217.02],
+                [221.44, 222.08, 223.82, 220.63],
+                [219.19, 218.80, 220.33, 216.12],
+                [216.96, 218.24, 219.30, 215.75],
+                [218.70, 217.96, 219.49, 216.01],
+                [218.93, 217.49, 220.85, 214.62],
+                [224.00, 218.54, 224.80, 217.13],
+                [224.37, 225.01, 226.94, 222.68],
+                [227.01, 223.96, 227.78, 223.09],
+                [224.82, 224.31, 226.80, 223.28],
+                [230.28, 224.18, 230.44, 222.27],
+                [229.45, 228.88, 231.46, 226.64],
+                [235.00, 234.82, 236.27, 232.33],
+                [236.48, 234.40, 237.23, 233.09],
+                [228.92, 230.54, 232.64, 228.68],
+                [231.39, 227.57, 232.39, 225.77],
+                [229.30, 232.98, 233.08, 229.25],
+                [227.93, 228.68, 229.40, 226.37],
+                [227.09, 227.82, 227.85, 223.25],
+                [221.65, 226.34, 226.45, 221.65],
+                [220.00, 221.55, 221.55, 219.03],
+                [216.15, 220.27, 220.38, 215.10],
+                [212.09, 216.75, 217.51, 211.92],
+                [215.77, 210.62, 216.07, 210.30],
+                [214.69, 214.10, 215.74, 212.35],
+                [211.50, 213.25, 214.86, 210.64],
+                [209.15, 209.07, 211.38, 208.61],
+                [207.72, 208.14, 212.70, 206.59],
+                [210.39, 207.49, 211.89, 207.11],
+                [213.93, 209.68, 214.24, 208.85],
+                [217.61, 214.29, 218.63, 213.00],
+                [213.30, 216.67, 218.94, 212.72],
+                [214.63, 214.10, 215.74, 212.35],
+                [211.44, 213.25, 214.86, 210.64],
+                [209.08, 209.07, 211.38, 208.61],
+                [207.72, 208.14, 212.70, 206.59],
+                [210.39, 207.49, 211.89, 207.11],
+                [213.93, 209.68, 214.24, 208.85],
+                [217.61, 214.29, 218.63, 213.00],
+                [213.30, 216.67, 218.94, 212.72],
+                [214.63, 214.10, 215.74, 212.35],
+                [211.44, 213.25, 214.86, 210.64],
+                [209.08, 209.07, 211.38, 208.61],
+                [207.72, 208.14, 212.70, 206.59]
+            ];
+
+            const view = candles.slice(0, Math.floor(candles.length / CANDLE_WIDTH + CANDLE_PADDING));
+
+            let currentZoom = 1;
+            let currentOffset = 0;
+            function render(zoom, offset) {
+                currentOffset = offset;
+                currentZoom = zoom;
+                canvasCtx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+                const pane = createPane(view, zoom, offset);
+                view.forEach((candle, i) => {
+                    drawCandle(i, pane, candle);
+                });
+            }
+            
+            canvas.addEventListener('mousedown', (ev) => {
+
+                const mouseMove = (ev) => {
+                    render(currentZoom, canvas.clientHeight - ev.clientY + 30);
+                    console.log(ev);
+                };
+                canvas.addEventListener('mousemove', mouseMove);
+                canvas.addEventListener('mouseup', () => {
+                    canvas.removeEventListener('mousemove', mouseMove);
+                });
+            });
+
+            render(1, 0);
+        </script>
 
 </main>
 
