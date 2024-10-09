@@ -20,3 +20,11 @@ class Price(models.Model):
     close = models.FloatField()
     volumne_currency = models.FloatField()
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+
+
+class Strategy(models.Model):
+    margin = models.FloatField()
+    takeProfit = models.FloatField()
+    stopLoss = models.FloatField()
+
+

@@ -7,4 +7,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("charts/<int:tradable_id>/", views.chart, name="charts"),
     path("coinflip", views.coinflip, name="coinflip"),
+    path("futurs", views.futures_trading, name="futurestrading"),
 ]

@@ -1,0 +1,25 @@
+<script>
+    function set_input_value(id, value) {
+        console.log(id)
+        document.getElementById(id).value = value
+
+    }
+</script>
+
+<span class="isolate inline-flex rounded-md shadow-sm">
+    <button type="button"
+        class="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 focus:bg-violet-700"
+        onclick="set_input_value('id_{{idOfField}}', 10 )">10%</button>
+    <button type="button"
+        class="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 focus:bg-violet-700"
+        onclick="set_input_value('id_{{idOfField}}', 20 )">20%</button>
+    <button type="button"
+        class="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 focus:bg-violet-700"
+        onclick="set_input_value('id_{{idOfField}}', 25 )">25%</button>
+    <button type="button"
+        class="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 focus:bg-violet-700"
+        onclick="set_input_value('id_{{idOfField}}', 50 )">50%</button>
+    <button type="button"
+        class="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 focus:bg-violet-700"
+        onclick="set_input_value('id_{{idOfField}}', 100 )">100%</button>
+</span>
